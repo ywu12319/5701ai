@@ -46,6 +46,7 @@ def classify(img, model):
     s = nn.Softmax(dim=1)
     device = torch.device('cpu');
     out = s(model(img.unsqueeze(0).to(device)))
+    return out
     print('Prediction: {}'.format(out))
 
 
