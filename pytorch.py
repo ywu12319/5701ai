@@ -1,10 +1,11 @@
-#https://www.kaggle.com/unbreakableric/pytorch-starter-c4f1a7/edit
 #For accessing files
 import os
 import glob
 
 #For Images
-#import cv2
+import cv2
+from skimage import io
+from skimage.transform import resize
 #import matplotlib.pyplot as plt
 import numpy as np
 
@@ -41,9 +42,38 @@ class Net(nn.Module):
         out = self.fc2(out)
         return out
 
+def classify(img, model):
+    s = nn.Softmax(dim=1)
+    device = torch.device('cpu');
+    out = s(model(img.unsqueeze(0).to(device)))
+    print('Prediction: {}'.format(out))
+
+
+
+def imgRead(img_path, transformations) :
+    #img = io.imread(img_path)
+    #img = resize(img, (32,32,3))
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img,(32,32))
+    if transformations is not None:
+        img_as_tensor = transformations(img)     
+        return img_as_tensor
+    return img
+    
+
 if __name__ == "__main__":
     model = Net()
 
     model.load_state_dict(torch.load("./fruit.pt",map_location=torch.device('cpu')))
     print(model.eval())
+    transformations = transforms.Compose([
+                                      transforms.ToTensor(),
+                                      transforms.Normalize((0.7369, 0.6360, 0.5318),
+                                                           (0.3281, 0.3417, 0.3704))
+                                      ])
+    res = classify(imgRead('./test_1.png',transformations), model)
+    print(res);
+
+
 
