@@ -49,7 +49,7 @@ def imgRead(img_path, transformations) :
 if __name__ == "__main__":
     model = Net()
 
-    model.load_state_dict(torch.load("./fruit.pt",map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load("./model/fruit.pt",map_location=torch.device('cpu')))
     print(model.eval())
     transformations = transforms.Compose([
                                       transforms.ToTensor(),
