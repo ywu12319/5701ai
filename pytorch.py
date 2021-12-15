@@ -1,29 +1,12 @@
-#For accessing files
 import os
 import glob
-
-#For Images
 import cv2
 from skimage import io
 from skimage.transform import resize
-#import matplotlib.pyplot as plt
-import numpy as np
-
-#For checking progress
-#from tqdm import tqdm_notebook
-
-import datetime
-
-#PyTorch Packages
 import torch
-from torch.utils.data.dataset import Dataset
 from torchvision import transforms
-from torch.utils.data.sampler import SubsetRandomSampler
 import torch.nn.functional as F
-import torch.optim as optim
 import torch.nn as nn
-
-#ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
 
